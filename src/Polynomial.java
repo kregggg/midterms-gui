@@ -3,6 +3,9 @@
         Solomon, Craig David T.
     Date:
         8 October 2025
+    Purpose:
+        A template for a polynomial to be user for the PolynomialArithmetic class
+        Contains a list of Terms
 */
 
 import java.util.LinkedList;

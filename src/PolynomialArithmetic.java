@@ -1,9 +1,50 @@
+/*
+    Name:
+        Solomon, Craig David T.
+    Date:
+        October 16, 2025
+
+    Problem:
+        Complete and organize the Polynomial Arithmetic code given
+
+    Algorithm (USING GUI)
+        1. Create main frame where welcome message and main menu options/buttons will be placed
+        2. Set buttons so that each button will open its corresponding panel and method
+            2.1. Evaluate Polynomial -> evaluatePolynomial()
+            2.2. Addition of Polynomials -> operationsPanel("Addition")
+            2.3. Subtraction of Polynomials -> operationsPanel("Subtraction")
+            2.4. Multiplication of Polynomials -> -> operationsPanel("Multiplication")
+            2.5. Division of Polynomials -> operationsPanel("Addition")
+        3. Allow user to input 2 Polynomial expressions
+            3.1. For evaluatePolynomial, allow only 1 polynomial input and ask user to value of literal
+        4. After successfully following format of polynomial, click of <operations> button
+        5. Pop up message will appear that will indicate result of operations
+        6. Return to main menu panel until program is closed
+*/
+
 import java.awt.*;
+import java.util.Scanner;
 import javax.swing.*;
 
+/**
+ * A program that allows user to perform computations of polynomials.
+ * <p>
+ *     Allows polynomial evaluation and basic arithmetic operations (such as addition,
+ *     subtraction, multiplication, and division)
+ * </p>
+ */
 public class PolynomialArithmetic {
     static JFrame mainFrame = new JFrame("Polynomial Arithmetic");
+    Scanner keyboard = new Scanner(System.in);
 
+    /**
+     * Main method that initializes and runs the program.
+     * <p>
+     *     Starts up the Graphical User Interface (GUI) for the program.
+     *     Initializes the JFrame where option panels will be added to.
+     * </p>
+     * @param args
+     */
     public static void main(String[] args) {
         // Initialize main frame
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +65,13 @@ public class PolynomialArithmetic {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Creates welcome message along with sentence prompt for user to select action to be done.
+     * <p>
+     *     Creates a header panel for the JFrame.
+     *     Contains welcome message for the user and prompt to select an action to be done in the polynomial.
+     * </p>
+     */
     public static void createWelcomePanel() {
         JPanel welcomeMessagePanel = new JPanel();
         welcomeMessagePanel.setBackground(new Color(222, 216, 211));
@@ -53,6 +101,18 @@ public class PolynomialArithmetic {
         mainFrame.add(welcomeMessagePanel);
     }
 
+    /**
+     * Contains main menu options.
+     * <p>
+     *    A panel that consists of the 5 buttons with corresponding actions for the program.
+     *    Actions include the following:
+     *    1. Evaluate Program
+     *    2. Addition of Polynomials
+     *    3. Subtraction of Polynomials
+     *    4. Multiplication of Polynomials
+     *    5. Division of Polynomials
+     * </p>
+     */
     public static void createMenuPanel() {
         JPanel panel = new JPanel();
         panel.setBounds(150, 150, 300, 300);
@@ -87,6 +147,14 @@ public class PolynomialArithmetic {
         mainFrame.add(panel);
     }
 
+    /**
+     * Initializes new panel to allow user to input necessary information to evaluate/solve a function.
+     * <p>
+     *     Creates a panel that will take over the program GUI.
+     *     Allows user to input polynomial function and the value of the literal in the function.
+     *     Substitutes the value into the literal and solves using the Polynomial.evaluate() method.
+     * </p>
+     */
     public static void evaluatePolynomial() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(222, 216, 211));
@@ -173,6 +241,20 @@ public class PolynomialArithmetic {
         mainFrame.repaint();
     }
 
+    /**
+     * Creates operation panel to allow user to perform actions depending on selected operation.
+     * <p>
+     *     Creates a panel that will take over the program GUI.
+     *     Allow user to input 2 polynomial functions.
+     *     Offer a button to solve the user input polynomials.
+     *     Solve Polynomial operation based on user input.
+     *     a. Addition
+     *     b. Subtraction
+     *     c. Multiplication
+     *     d. Division
+     * </p>
+     * @param operation controls the operation to be done, based on button output from createMenuPanel()
+     */
     public static void operationPanel(String operation) {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(222, 216, 211));
@@ -302,6 +384,17 @@ public class PolynomialArithmetic {
         mainFrame.repaint();
     }
 
+    /**
+     * Extracts polynomial from user input in text area/boxes.
+     * <p>
+     *     Creates a new array that splits user input by separating values by a space(" ").
+     *     Creates a new Term based on each content of the split array.
+     *     Adds each term to a new polynomial to be returned.
+     * </p>
+     * @param expression is the user input in the text area/box.
+     * @return an extracted polynomial from the String expression parameter.
+     * @throws Exception for invalid user inputs.
+     */
     public static Polynomial extractPolynomial(String expression) throws Exception {
         if (expression == null || expression.isBlank())
             throw new Exception("Empty polynomial input.");
@@ -370,6 +463,17 @@ public class PolynomialArithmetic {
         return result;
     }
 
+    /**
+     * Checks user input if it is considered a "valid" polynomial by the system.
+     * <p>
+     *     A considered proper polynomial is when a polynomial follows the format given:
+     *     4x^3 +3x^2 -9x +2
+     *     Spaces should be added after each term.
+     *     While operations & positive/negative indicators should be attached to coefficient (no spaces).
+     * </p>
+     * @param input is the user input polynomial to be validated.
+     * @return a boolean value depending on user polynomial, if it is "valid" or not.
+     */
     public static boolean isValidPolynomial(String input) {
         if (input == null || input.isBlank()) return false;
 
@@ -387,6 +491,16 @@ public class PolynomialArithmetic {
         return input.matches(fullPattern);
     }
 
+    /**
+     * Creates information message window to show results/output of computations.
+     * <p>
+     *     Creates a JOptionPane to inform user about results of the computation.
+     * </p>
+     * @param operation is a string value that indicates the operation done, used for output labels.
+     * @param p1 is the first polynomial in the equation.
+     * @param p2 is the seconds polynomial in the equation.
+     * @throws Exception for possible no matches in the switch case or errors in the JOptionPane message.
+     */
     public static void showResults(String operation, Polynomial p1, Polynomial p2) throws Exception {
         switch (operation){
             case "Addition":
@@ -408,4 +522,315 @@ public class PolynomialArithmetic {
         }
     }
 
+    /**
+     * Handles Main menu options for text based output.
+     * <p>
+     *     Main connection of all methods. Handles choice input, method call for printing menu, operation methods
+     *     choice validation, and code termination.
+     * </p>
+     * @throws Exception for possible invalid inputs.
+     */
+    public void run() throws Exception{
+        byte choice = 0;
+        while ( choice != 6 ) {
+            showMenu();
+            choice = readChoice((byte) 1, (byte) 6);
+            switch (choice){
+                case 1:
+                    evaluatePolynomialText();
+                    break;
+                case 2:
+                    addPolynomials();
+                    break;
+                case 3:
+                    subtractPolynomials();
+                    break;
+                case 4:
+                    multiplyPolynomials();
+                    break;
+                case 5:
+                    dividePolynomials();
+                    break;
+                case 6:
+                    System.out.println("Thank you for using this program.");
+            } // end of swicth
+        } // end of while
+    } // end of run
+
+    /**
+     * Allows user to input a choice in the menu for the text based execution.
+     * <p>
+     *     Allow user to input a number choice within the given range of 'low' and 'high' .
+     * </p>
+     * @param low is the number that corresponds to the lowest number that corresponds to a choice in the menu.
+     * @param high is the number that corresponds to the highest number that corresponds to a choice in the menu.
+     * @return the user input number (the 'choice').
+     * @throws Exception for invalid inputs.
+     */
+    private byte readChoice(byte low, byte high) throws Exception{
+        byte choice=0;
+        System.out.print("Enter your choice<"+ low + "... " + high + ">: ");
+        choice = (byte) readInteger(low, high);
+        return choice;
+    }
+
+    /**
+     * Prints main menu that shows all options offered by the program. Used in the text based execution.
+     * <p>
+     *     Contains the following choices
+     *     1. Evaluate a polynomial
+     *     2. Add two polynomials
+     *     3. Subtract a polynomial from another polynomial
+     *     4. Multiply two polynomials
+     *     5. Divide a polynomial by another polynomial
+     *     6. Quit
+     * </p>
+     */
+    public void showMenu() {
+        System.out.println("-----------------------MENU--------------------------");
+        System.out.println("1. Evaluate a polynomial");
+        System.out.println("2. Add two polynomials");
+        System.out.println("3. Subtract a polynomial from another polynomial");
+        System.out.println("4. Multiply two polynomials");
+        System.out.println("5. Divide a polynomial by another polynomial");
+        System.out.println("6. Quit");
+        System.out.println("------------------------------------------------------");
+    }
+
+    /**
+     * Handles main interface for evaluating/solving a polynomial. Used in text based execution.
+     * @throws Exception for invalid polynomial inputs.
+     */
+    public void evaluatePolynomialText() throws Exception{
+        System.out.println("You want to evaluate a polynomial.");
+
+        Polynomial p = readPolynomial();
+        System.out.println("The polynomial entered is " + p.toString());
+        System.out.print("What is the value to be assigned to variable of the polynomial? ");
+        double value= readDouble();
+        System.out.println("The polynomial evaluates to : "+ p.evaluate(value));
+        System.out.println("Press enter to continue.....");
+        keyboard.nextLine();
+    }
+
+    /**
+     * Handles data validation for allowing user to input an integer/number in the text based execution.
+     * @param low is the lowest allowed user input.
+     * @param high is the highest allowed user input.
+     * @return the integer/number that the user entered.
+     */
+    private int readInteger(int low, int high){
+        boolean validInput = false;
+        int value=0;
+        while (!validInput){
+            try{
+                value = Integer.parseInt(keyboard.nextLine());
+                if ( value < low){
+                    System.out.print("The number must not be lower than "+ low + ". ");
+                }
+                else if ( value > high){
+                    System.out.print("The number must not be greater than "+ high +". ");
+                } else {
+                    validInput = true;
+                }
+            } catch (Exception x){
+                System.out.println("You have to enter an integer from " + low + " to " + high + ".");
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Allow user to input a double/decimal value. Used in the text based execution.
+     * @return a double type variable that the user entered.
+     */
+    private double readDouble(){
+        boolean validInput = false;
+        double value=0;
+        while (!validInput){
+            try{
+                value = Double.parseDouble(keyboard.nextLine());
+                validInput = true;
+            } catch (Exception x){
+                System.out.println("You have to enter a number.");
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Allows user to input a polynomial. Used in the text based execution
+     * <p>
+     *     Prints prompt messages and allows user to input each value separately. Values that the user has to input are the following:
+     *     1. Literal/Variable
+     *     2. Degree/Exponent
+     *     3. Coefficient
+     * </p>
+     * @return the polynomial built based on user inputs.
+     * @throws Exception for invalid user input.
+     */
+    public Polynomial readPolynomial() throws Exception{
+        Polynomial p = new Polynomial();
+        int degree=-1;
+        boolean validDegree = false;
+        char literalCoefficient = 'x';
+        System.out.println("The polynomial should involve one variable/literal only.");
+        do {
+            System.out.print("What is the literal coefficient of the polynomial in one variable? ");
+
+            literalCoefficient = keyboard.nextLine().charAt(0);
+        } while (!Character.isAlphabetic(literalCoefficient));
+        do {
+            System.out.print("What is the degree of the polynomial? ");
+            degree = readInteger(Integer.MIN_VALUE,Integer.MAX_VALUE);
+            validDegree = true;
+        } while (!validDegree);
+        for (int x=degree; x>=0; x=x-1){
+            Term term = readTerm(literalCoefficient, x);
+            p.addTerm(term);
+        }
+        return p;
+    }
+
+    /**
+     * Builds a term based on the given literal and degree. Used in the text based execution
+     * <p>
+     *     Allows user to input the coefficient for the term, attaching it to the given literal and degree.
+     *     to create a new term.
+     * </p>
+     * @param literal is the literal to be used to create a new term.
+     * @param degree is the degree to be used to create a new term.
+     * @return a new term with the given literal and degree along with the user input coefficient.
+     * @throws Exception for invalid user inputs.
+     */
+    public Term readTerm(char literal, int degree)throws Exception{
+        double nCoeff=0;
+        System.out.print("Enter the numerical coefficient of the term with degree " + degree +": ");
+        nCoeff = readDouble();
+        Term term = new Term(nCoeff, literal, degree);
+        return term;
+    }
+
+    /**
+     * Allows user to add 2 Polynomials. Used in text based execution.
+     * <p>
+     *     Asks user for 2 polynomials.
+     *     Uses the readPolynomial method to allow user to input details for the polynomial.
+     *     Prints polynomials to be added.
+     *     Prints sum of 2 given polynomials.
+     * </p>
+     * @throws Exception for invalid user inputs.
+     */
+    public void addPolynomials() throws Exception {
+        System.out.println("You want to add two polynomials.");
+        System.out.println("Enter the first polynomial.");
+        Polynomial p1 = readPolynomial();
+        System.out.println("Enter the second polynomial.");
+        System.out.println("Note that the second variable should have the same variable/literal as the first polynomial.");
+        Polynomial p2 = readPolynomial();
+        System.out.println("First polynomial : " + p1.toString());
+        System.out.println("Second polynomial : " + p2.toString());
+        if (p1.getTerms().get(0).getLiteral() == p2.getTerms().get(0).getLiteral()) {
+            System.out.println("Sum of the polynomials : " + p1.add(p2));
+        } else {
+            System.out.println("The two polynomials cannot be added because they have different literals.");
+        }
+        System.out.println("Press enter to continue.....");
+        keyboard.nextLine();
+    }
+
+    /**
+     * Allows user to subtract a polynomial from another polynomial. Used in text based execution.
+     * <p>
+     *     Asks user for 2 polynomials.
+     *     Uses the readPolynomial method to allow user to input details for the polynomial.
+     *     Prints polynomials to be subtracted.
+     *     Prints difference of 2 given polynomials.
+     * </p>
+     * @throws Exception for invalid user inputs.
+     */
+    public void subtractPolynomials() throws Exception {
+        System.out.println("You want to perform subtraction between two polynomials.");
+        System.out.println("Enter the first polynomial.");
+        Polynomial p1 = readPolynomial();
+        System.out.println("Enter the second polynomial.");
+        System.out.println("Note that the second variable should have the same variable/literal as the first polynomial.");
+        Polynomial p2 = readPolynomial();
+        System.out.println("First polynomial : " + p1.toString());
+        System.out.println("Second polynomial : " + p2.toString());
+        if (p1.getTerms().get(0).getLiteral() == p2.getTerms().get(0).getLiteral()) {
+            System.out.println("Difference of the polynomials : " + p1.subtract(p2));
+        } else {
+            System.out.println("The second polynomial cannot be subtracted form the first polynomial because they have different literals.");
+        }
+        System.out.println("Press enter to continue.....");
+        keyboard.nextLine();
+    }
+
+    /**
+     * Allows user to multiply 2 Polynomials. Used in text based execution.
+     * <p>
+     *     Asks user for 2 polynomials.
+     *     Uses the readPolynomial method to allow user to input details for the polynomial.
+     *     Prints polynomials to be multiplied.
+     *     Prints product of 2 given polynomials.
+     * </p>
+     * @throws Exception for invalid user inputs.
+     */
+    public void multiplyPolynomials() throws Exception {
+        System.out.println("You want to perform multiplication between two polynomials.");
+        System.out.println("Enter the first polynomial.");
+        Polynomial p1 = readPolynomial();
+        System.out.println("Enter the second polynomial.");
+        System.out.println("Note that the second variable should have the same variable/literal as the first polynomial.");
+        Polynomial p2 = readPolynomial();
+        System.out.println("First polynomial : " + p1.toString());
+        System.out.println("Second polynomial : " + p2.toString());
+        if (p1.getTerms().get(0).getLiteral() == p2.getTerms().get(0).getLiteral()) {
+            System.out.println("Product of the polynomials : " + p1.multiply(p2));
+        } else {
+            System.out.println("The polynomials cannot be multiplied because they have different literals.");
+        }
+        System.out.println("Press enter to continue.....");
+        keyboard.nextLine();
+    }
+
+    /**
+     * Allows user to divide a polynomial by another polynomial. Used in text based execution.
+     * <p>
+     *     Asks user for 2 polynomials.
+     *     Uses the readPolynomial method to allow user to input details for the polynomial.
+     *     Prints polynomials to be divided.
+     *     Prints quotient of 2 given polynomials.
+     * </p>
+     * @throws Exception for invalid user inputs.
+     */
+    public void dividePolynomials() throws Exception {
+        System.out.println("You want to perform division between two polynomials.");
+        System.out.println("Enter the first polynomial.");
+        Polynomial p1 = readPolynomial();
+        System.out.println("Enter the second polynomial.");
+        System.out.println("Note that the second variable should have the same variable/literal as the first polynomial.");
+        Polynomial p2 = readPolynomial();
+        System.out.println("First polynomial : " + p1.toString());
+        System.out.println("Second polynomial : " + p2.toString());
+        if (p1.getTerms().get(0).getLiteral() == p2.getTerms().get(0).getLiteral()) {
+            System.out.println("Quotient of the polynomials : " + p1.add(p2));
+        } else {
+            System.out.println("The first polynomials cannot be divided by the second polynomial because they have different literals.");
+        }
+        System.out.println("Press enter to continue.....");
+        keyboard.nextLine();
+    }
+
+//    Main method to run text based program
+//    public static void main(String[] args) {
+//        PolynomialArithmetic program;
+//        try {
+//            program = new PolynomialArithmetic();
+//            program.run();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    } // end of main
 }

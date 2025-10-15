@@ -1,9 +1,12 @@
 /**
- * The following class is a template for a term of an algebraic polynomial that involves only one literal.
- * 3x^2 is an example of a term
- * where 3 is the numerical coefficient,
- * x is the literal coefficient and
- * 2 is the degree
+ * Template for a term in the Polynomial class
+ * <p>
+ *     The following class is a template for a term of an algebraic polynomial that involves only one literal.
+ *     3x^2 is an example of a term
+ *     where 3 is the numerical coefficient,
+ *     x is the literal coefficient and
+ *     2 is the degree
+ * </p>
  */
 public class Term implements Comparable<Term> {
     private double coefficient; //data member to hold numerical coefficient of a term
