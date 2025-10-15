@@ -2,7 +2,7 @@
     Name:
         Solomon, Craig David T.
     Date:
-        October 16, 2025
+        October 16, 2025 (Midterms Individual Project)
 
     Problem:
         Complete and organize the Polynomial Arithmetic code given
