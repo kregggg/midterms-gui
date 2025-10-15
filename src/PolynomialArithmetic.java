@@ -54,13 +54,10 @@ public class PolynomialArithmetic {
         mainFrame.setLayout(null);
 
         // Set application favicon
-        ImageIcon mainIcon = new ImageIcon("icon.png"); // Insert image path inside parenthesis
+        ImageIcon mainIcon = new ImageIcon("icon.png");
         mainFrame.setIconImage(mainIcon.getImage());
 
-        // Add main menu panels
         createMenuPanel();
-
-        // Add components to main frame (must be done last)
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
     }
@@ -75,7 +72,7 @@ public class PolynomialArithmetic {
     public static void createWelcomePanel() {
         JPanel welcomeMessagePanel = new JPanel();
         welcomeMessagePanel.setBackground(new Color(222, 216, 211));
-        welcomeMessagePanel.setBounds(120, 0, 350, 150); // 👈 important
+        welcomeMessagePanel.setBounds(120, 0, 350, 150);
         welcomeMessagePanel.setLayout(new BorderLayout());
 
         JPanel textPanel = new JPanel();
@@ -90,14 +87,12 @@ public class PolynomialArithmetic {
         label1.setAlignmentX(Component.CENTER_ALIGNMENT);
         label1.setFont(new Font("Serif", Font.BOLD, 20));
 
-        // Add vertical spacing between labels
         textPanel.add(Box.createVerticalStrut(5));
         textPanel.add(welcomeMessage);
         textPanel.add(Box.createVerticalStrut(5));
         textPanel.add(label1);
 
         welcomeMessagePanel.add(textPanel, BorderLayout.SOUTH);
-
         mainFrame.add(welcomeMessagePanel);
     }
 
@@ -119,7 +114,7 @@ public class PolynomialArithmetic {
         panel.setLayout(new GridLayout(5, 1, 0, 10));
         panel.setBackground(new Color(222, 216, 211));
 
-        JButton button1 = new JButton("Evaulate Polynomial");
+        JButton button1 = new JButton("Evaluate Polynomial");
         JButton button2 = new JButton("Addition");
         JButton button3 = new JButton("Subtraction");
         JButton button4 = new JButton("Multiplication");
@@ -161,7 +156,7 @@ public class PolynomialArithmetic {
         panel.setBounds(0, 0, 600, 600);
         panel.setLayout(null); // manual layout
 
-        // === Subpanel 1 (Polynomial Input) ===
+        // Panel for polynomial to be evaluated
         JPanel polyPanel = new JPanel();
         polyPanel.setBounds(100, 50, 400, 300);
         polyPanel.setBackground(new Color(240, 240, 240));
@@ -176,7 +171,7 @@ public class PolynomialArithmetic {
         polyPanel.add(polyLabel, BorderLayout.NORTH);
         polyPanel.add(new JScrollPane(polyArea), BorderLayout.CENTER);
 
-        // === Subpanel 2 (Literal Value Input) ===
+        // Panel for value of literal/variable
         JPanel literalPanel = new JPanel();
         literalPanel.setBounds(100, 370, 400, 80);
         literalPanel.setBackground(new Color(240, 240, 240));
@@ -192,7 +187,7 @@ public class PolynomialArithmetic {
         literalPanel.add(literalLabel, BorderLayout.NORTH);
         literalPanel.add(literalField, BorderLayout.CENTER);
 
-        // === Buttons ===
+        // Buttons
         JButton evaluateButton = new JButton("Evaluate");
         evaluateButton.setBounds(200, 480, 100, 40);
         evaluateButton.addActionListener(e -> {
@@ -228,13 +223,11 @@ public class PolynomialArithmetic {
             mainFrame.repaint();
         });
 
-        // === Add all components ===
         panel.add(polyPanel);
         panel.add(literalPanel);
         panel.add(evaluateButton);
         panel.add(backButton);
 
-        // === Display panel ===
         mainFrame.getContentPane().removeAll();
         mainFrame.add(panel);
         mainFrame.revalidate();
@@ -259,15 +252,15 @@ public class PolynomialArithmetic {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(222, 216, 211));
         panel.setBounds(0, 0, 600, 600);
-        panel.setLayout(null); // manual positioning
+        panel.setLayout(null);
 
-        // === Subpanel 1 (First Polynomial) ===
+        // First polynomial in operation (upper tab)
         JPanel firstPanel = new JPanel();
         firstPanel.setBounds(100, 50, 400, 200);
         firstPanel.setBackground(new Color(240, 240, 240));
         firstPanel.setLayout(new BorderLayout(5, 5));
 
-        // Create a small panel for the label + example
+        // Label and example
         JPanel firstLabelPanel = new JPanel();
         firstLabelPanel.setLayout(new BoxLayout(firstLabelPanel, BoxLayout.Y_AXIS));
         firstLabelPanel.setOpaque(false);
@@ -291,13 +284,13 @@ public class PolynomialArithmetic {
         firstPanel.add(firstLabelPanel, BorderLayout.NORTH);
         firstPanel.add(new JScrollPane(textArea1), BorderLayout.CENTER);
 
-        // === Subpanel 2 (Second Polynomial) ===
+        // Second polynomial in operation (lower tab)
         JPanel secondPanel = new JPanel();
         secondPanel.setBounds(100, 280, 400, 200);
         secondPanel.setBackground(new Color(240, 240, 240));
         secondPanel.setLayout(new BorderLayout(5, 5));
 
-        // Label + optional example for second panel
+        // Label and example
         JPanel secondLabelPanel = new JPanel();
         secondLabelPanel.setLayout(new BoxLayout(secondLabelPanel, BoxLayout.Y_AXIS));
         secondLabelPanel.setOpaque(false);
@@ -321,7 +314,7 @@ public class PolynomialArithmetic {
         secondPanel.add(secondLabelPanel, BorderLayout.NORTH);
         secondPanel.add(new JScrollPane(textArea2), BorderLayout.CENTER);
 
-        // === Determine operation button label ===
+        // Operation button set up
         String buttonLabel = "";
         switch (operation){
             case "Addition" -> buttonLabel = "Add";
@@ -330,16 +323,16 @@ public class PolynomialArithmetic {
             case "Division" -> buttonLabel = "Divide";
         }
 
-        // === Button to get text ===
+        // Extract polynomial and start computation
         JButton getTextButton = new JButton(buttonLabel);
         getTextButton.setBounds(200, 500, 100, 40);
         getTextButton.addActionListener(e -> {
             String firstPoly = textArea1.getText();
             String secondPoly = textArea2.getText();
             if (!isValidPolynomial(firstPoly) || !isValidPolynomial(secondPoly)){
+                // If polynomial does not follow given format
                 JOptionPane.showMessageDialog(null, "Invalid Polynomial Input! ", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                // Example: splitting terms for further parsing
                 try {
                     Polynomial pol1 = extractPolynomial(firstPoly);
                     Polynomial pol2 = extractPolynomial(secondPoly);
@@ -361,23 +354,19 @@ public class PolynomialArithmetic {
             }
         });
 
-        // === Button to go back to the menu ===
         JButton backButton = new JButton("Back");
         backButton.setBounds(320, 500, 100, 40);
         backButton.addActionListener(e -> {
             mainFrame.getContentPane().removeAll();
-            createMenuPanel(); // 👈 back to main menu
-            mainFrame.revalidate();
+            createMenuPanel();
             mainFrame.repaint();
         });
 
-        // === Add components to main panel ===
         panel.add(firstPanel);
         panel.add(secondPanel);
         panel.add(getTextButton);
         panel.add(backButton);
 
-        // === Replace old content ===
         mainFrame.getContentPane().removeAll();
         mainFrame.add(panel);
         mainFrame.revalidate();
@@ -396,28 +385,26 @@ public class PolynomialArithmetic {
      * @throws Exception for invalid user inputs.
      */
     public static Polynomial extractPolynomial(String expression) throws Exception {
-        if (expression == null || expression.isBlank())
+        if (expression == null || expression.isBlank()) {
             throw new Exception("Empty polynomial input.");
+        }
 
-        // Remove spaces for easier parsing
         expression = expression.replaceAll("\\s+", "");
 
-        // Split terms by + or -, keeping the sign with each term
         String[] terms = expression.split("(?=[+-])");
 
         Polynomial result = new Polynomial();
 
         for (String termExp : terms) {
-            if (termExp.isBlank()) continue;
-
+            if (termExp.isBlank()){
+                continue;
+            }
             Term term = new Term();
 
-            // Default coefficient and exponent
             int coefficient = 0;
             int exponent = 0;
             char literal = '\0';
 
-            // === Extract coefficient and variable ===
             int varIndex = -1;
             for (int i = 0; i < termExp.length(); i++) {
                 if (Character.isAlphabetic(termExp.charAt(i))) {
@@ -427,7 +414,6 @@ public class PolynomialArithmetic {
             }
 
             if (varIndex == -1) {
-                // Constant term (no variable)
                 coefficient = Integer.parseInt(termExp);
                 exponent = 0;
             } else {
@@ -439,7 +425,6 @@ public class PolynomialArithmetic {
 
                 coefficient = Integer.parseInt(coeffPart);
 
-                // Check for exponent
                 int caretIndex = termExp.indexOf('^', varIndex);
                 if (caretIndex != -1) {
                     String expPart = termExp.substring(caretIndex + 1);
@@ -449,7 +434,7 @@ public class PolynomialArithmetic {
                         throw new Exception("Invalid exponent in term: " + termExp);
                     }
                 } else {
-                    exponent = 1; // default
+                    exponent = 1;
                 }
             }
 
@@ -477,17 +462,12 @@ public class PolynomialArithmetic {
     public static boolean isValidPolynomial(String input) {
         if (input == null || input.isBlank()) return false;
 
-        // Remove extra spaces (e.g., between + and terms)
         input = input.trim().replaceAll("\\s+", "");
 
-        // Pattern for one valid term:
-        // optional sign, optional digits, optional variable, optional exponent
         String termPattern = "[-+]?\\d*([a-zA-Z](\\^\\d+)?)?";
 
-        // Full polynomial = one or more terms separated by + or -
         String fullPattern = termPattern + "([+-]" + termPattern + ")*";
 
-        // Validate entire input
         return input.matches(fullPattern);
     }
 
